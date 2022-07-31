@@ -10,7 +10,9 @@ defmodule Soundadvice.MixProject do
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      elixirc_options: [warnings_as_errors: halt_on_warnings?(Mix.env())],
+      preferred_cli_env: [vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test]
     ]
   end
 
@@ -27,7 +29,8 @@ defmodule Soundadvice.MixProject do
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
-
+  defp halt_on_warnings?(:test), do: false
+  defp halt_on_warnings?(_), do: true
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
